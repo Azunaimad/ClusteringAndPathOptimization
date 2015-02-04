@@ -8,27 +8,28 @@ public class Ant {
     protected int numberOfTowns;
 
 
-    public Ant(){
-        /* TODO */
+    public Ant(int numberOfTowns){
+        this.numberOfTowns = numberOfTowns;
     }
 
-    private int countNewTownIndex(double[] probabilityDistribution, double happenedProbability){
+    protected int countNewTownIndex(double[] probabilityDistribution, double happenedProbability){
         int newTownIndex = 0;
-        int probSum = 0;
+        double probSum = 0;
         for(int j=0; j<probabilityDistribution.length; j++){
             probSum+= probabilityDistribution[j];
             if (happenedProbability<probSum){
                 // newTownIndex = i-1+j = j - (numberOfTowns - i) + numberOfTowns - 1 =
                 // = j - nextTowns.length + numberOfTowns - 1;
                 // nextTowns.length = probabilityDistribution.length
-                newTownIndex = j - probabilityDistribution.length + numberOfTowns - 1;
+                newTownIndex = j - probabilityDistribution.length + numberOfTowns;
+                System.out.println(newTownIndex);
                 break;
             }
         }
         return newTownIndex;
     }
 
-    private double [] countProbabilityDistribution(double[][] pheromonesMatrix,
+    protected double [] countProbabilityDistribution(double[][] pheromonesMatrix,
                                                    double[][] visibilityMatrix,
                                                    int currentTown,
                                                    int[] nextTowns){
@@ -42,11 +43,12 @@ public class Ant {
     }
 
     protected void makeNewAntRoute(double[][] pheromonesMatrix, double[][] visibilityMatrix){
-        for(int i=1; i<numberOfTowns-1; i++){
+        for(int i=1; i<numberOfTowns-2; i++){
             int currentTown = antRoute[i-1];
             int[] nextTowns = new int[numberOfTowns - i];
             //Get ant next towns
-            System.arraycopy(antRoute, i, nextTowns, i, numberOfTowns - i);
+            for(int j = i; j<numberOfTowns-1; j++)
+                nextTowns[j] = antRoute[j];
             double[] probabilityDistribution = countProbabilityDistribution(pheromonesMatrix,
                     visibilityMatrix, currentTown, nextTowns);
             double happenedProbability = (new Random()).nextDouble();
@@ -55,7 +57,7 @@ public class Ant {
         }
     }
 
-    private void swapTowns(int oldTownIndex, int newTownIndex){
+    protected void swapTowns(int oldTownIndex, int newTownIndex){
         int temp = antRoute[newTownIndex];
         antRoute[newTownIndex] = antRoute[oldTownIndex];
         antRoute[oldTownIndex] = temp;
