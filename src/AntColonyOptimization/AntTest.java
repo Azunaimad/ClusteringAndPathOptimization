@@ -2,7 +2,7 @@ package AntColonyOptimization;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class AntTest{
     public AntTest(){
@@ -32,5 +32,41 @@ public class AntTest{
         int expVal = 4;
         int result = ant.countNewTownIndex(probabilityDistribution, happenedProbability);
         assertEquals(expVal,result);
+    }
+
+    @Test
+    public void testCountProbabilityDitribution(){
+        double[][] pheromonesMatrix = { {0.0, 0.1, 0.1},
+                                        {0.1, 0.0, 0.1},
+                                        {0.1, 0.1, 0.0} };
+        double[][] visibilityMatrix = { {0.0 , 0.05, 0.03},
+                                        {0.04, 0.0 , 0.02},
+                                        {0.06, 0.03 , 0.0}};
+        int currentTown = 0;
+        int[] nextTowns = {2, 1};
+        double pheromonesPower = 1.0;
+        double visibilityPower = 2.0;
+        int numberOfTowns = 3;
+
+        Ant ant = new Ant(numberOfTowns);
+
+        double[] result = ant.countProbabilityDistribution(pheromonesMatrix,
+                visibilityMatrix,currentTown,nextTowns,
+                pheromonesPower,visibilityPower);
+
+        double[] expDistr = {0.00009/0.00034, 0.00025/0.00034};
+        assertArrayEquals(expDistr,result,0.00000001);
+    }
+
+    @Test
+    public void testMakeInitialAntRoute(){
+        int numberOfTowns = 10;
+        Ant ant = new Ant(numberOfTowns);
+        ant.makeInitialAntRoute();
+
+        int expVal=11;
+        assertEquals(expVal,ant.antRoute.length);
+        assertEquals(ant.antRoute[0],ant.antRoute[10]);
+        for(int i=0; i<numberOfTowns+1; i++) System.out.println(ant.antRoute[i]);
     }
 }

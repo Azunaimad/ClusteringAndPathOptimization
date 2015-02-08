@@ -59,12 +59,14 @@ public class Ant {
 
     protected void makeInitialAntRoute(){
         Random random = new Random();
+        antRoute = new int[numberOfTowns+1];
         for(int j=0; j<numberOfTowns; j++) antRoute[j] = j;
 
         for(int j=0; j<numberOfTowns; j++){
             int ran = j + random.nextInt (numberOfTowns-j);
             swapTowns(ran, j);
         }
+        antRoute[numberOfTowns] = antRoute[0];
     }
 
     protected void makeNewAntRoute(double[][] pheromonesMatrix, double[][] visibilityMatrix,
