@@ -23,24 +23,6 @@ public class AntTest{
     }
 
 
-    /*
-    private int countNewTownIndex(double[] probabilityDistribution, double happenedProbability){
-        int newTownIndex = 0;
-        int probSum = 0;
-        for(int j=0; j<probabilityDistribution.length; j++){
-            probSum+= probabilityDistribution[j];
-            if (happenedProbability<probSum){
-                // newTownIndex = i-1+j = j - (numberOfTowns - i) + numberOfTowns - 1 =
-                // = j - nextTowns.length + numberOfTowns - 1;
-                // nextTowns.length = probabilityDistribution.length
-                newTownIndex = j - probabilityDistribution.length + numberOfTowns - 1;
-                break;
-            }
-        }
-        return newTownIndex;
-    }
-     */
-
     @Test
     public void testCountNewTownIndex(){
         int numberOfTowns = 6;
