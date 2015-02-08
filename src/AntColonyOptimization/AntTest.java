@@ -1,8 +1,10 @@
 package AntColonyOptimization;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 public class AntTest{
     public AntTest(){
@@ -66,7 +68,14 @@ public class AntTest{
 
         int expVal=11;
         assertEquals(expVal,ant.antRoute.length);
-        assertEquals(ant.antRoute[0],ant.antRoute[10]);
-        for(int i=0; i<numberOfTowns+1; i++) System.out.println(ant.antRoute[i]);
+
+        //Test that route's end equals start
+        assertEquals(ant.antRoute[0],ant.antRoute[numberOfTowns]);
+
+        //Test that ant.Route contains all Towns
+        for(int i=0; i<numberOfTowns; i++) {
+            boolean test = ArrayUtils.contains(ant.antRoute,i);
+            assertEquals(true,test);
+        }
     }
 }
