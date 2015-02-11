@@ -6,10 +6,14 @@ public class Ant {
 
     protected int[] antRoute;
     protected int numberOfTowns;
+    protected double routeLength;
 
 
-    public Ant(int numberOfTowns){
+    public Ant(int numberOfTowns, double[][] distanceMatrix){
         this.numberOfTowns = numberOfTowns;
+        this.antRoute = new int[numberOfTowns+1];
+        makeInitialAntRoute();
+        routeLength = getRouteLength(distanceMatrix);
     }
 
     protected int countNewTownIndex(double[] probabilityDistribution, double happenedProbability){
@@ -59,7 +63,6 @@ public class Ant {
 
     protected void makeInitialAntRoute(){
         Random random = new Random();
-        antRoute = new int[numberOfTowns+1];
         for(int j=0; j<numberOfTowns; j++) antRoute[j] = j;
 
         for(int j=0; j<numberOfTowns; j++){
@@ -71,7 +74,7 @@ public class Ant {
 
     protected void makeNewAntRoute(double[][] pheromonesMatrix, double[][] visibilityMatrix,
                                    double pheromonesPower, double visibilityPower){
-        for(int i=1; i<numberOfTowns-2; i++){
+        for(int i=1; i<numberOfTowns-1; i++){ //или -2?
             int currentTown = antRoute[i-1];
             int[] nextTowns = new int[numberOfTowns - i];
             //Get ant next towns
@@ -89,6 +92,13 @@ public class Ant {
         int temp = antRoute[newTownIndex];
         antRoute[newTownIndex] = antRoute[oldTownIndex];
         antRoute[oldTownIndex] = temp;
+    }
+
+    protected double getRouteLength(double[][] distanceMatrix){
+        for(int i=0; i<distanceMatrix.length; i++){
+                routeLength += distanceMatrix[antRoute[i]][antRoute[i+1]];
+            }
+        return routeLength;
     }
 
 }
