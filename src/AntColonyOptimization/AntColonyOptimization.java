@@ -19,7 +19,6 @@ public class AntColonyOptimization {
 
     private Ant[] ants;
 
-    private int[] bestRoute;
     private int bestAntRouteIndex;
     private double bestLength;
 
@@ -49,7 +48,6 @@ public class AntColonyOptimization {
                 this.visibilityMatrix[i][j] = 1.0/distanceMatrix[i][j];
 
         this.bestLength = 9999999.0;
-        this.bestRoute = new int[numberOfTowns+1];
     }
 
     protected void countBestLength(){
@@ -61,16 +59,48 @@ public class AntColonyOptimization {
             }
         }
     }
-    
+
+    protected void countNewPheromones(){
+        double [][] simpleAntPher = new double[numberOfTowns][numberOfTowns];
+        double [][] eliteAntPher = new double[numberOfTowns][numberOfTowns];
+
+        //Count simple ants pheromones
+        for (int i=0; i<numberOfAnts; i++)
+            for(int j=0; j<numberOfTowns; j++){
+                simpleAntPher[ants[i].antRoute[j]][ants[i].antRoute[j+1]] =
+                        qParameter / ants[i].getRouteLength(distanceMatrix);
+            }
+
+        //Count elite ants pheromones
+        countBestLength();
+        for(int i=0; i<numberOfTowns; i++)
+            eliteAntPher[ants[bestAntRouteIndex].antRoute[i]]
+                    [ants[bestAntRouteIndex].antRoute[i+1]] = qParameter / bestLength;
+
+
+        //Update pheromones Matrix
+        for(int i=0; i<numberOfTowns; i++)
+            for(int j=0; j<numberOfTowns; j++)
+                pheromonesMatrix[i][j] = (1-pheromonesEvaporation)*simpleAntPher[i][j] +
+                        numberOfEliteAnts*eliteAntPher[i][j];
+    }
+
     public double getBestLength(){
         return bestLength;
     }
 
     public int[] getBestRoute(){
-        bestRoute = ants[bestAntRouteIndex].antRoute;
-        return bestRoute;
+        return ants[bestAntRouteIndex].antRoute;
     }
 
+    public void findOptimalPath(){
+        for(int i=0; i<numberOfIter; i++){
+            for(int j=0; j<numberOfAnts; j++)
+                ants[j].makeNewAntRoute(pheromonesMatrix, visibilityMatrix,
+                        pheromonesPower, visibilityPower);
+            countNewPheromones();
+        }
+    }
 
 
 }

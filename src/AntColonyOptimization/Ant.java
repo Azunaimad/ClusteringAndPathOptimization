@@ -74,14 +74,17 @@ public class Ant {
 
     protected void makeNewAntRoute(double[][] pheromonesMatrix, double[][] visibilityMatrix,
                                    double pheromonesPower, double visibilityPower){
+
         for(int i=1; i<numberOfTowns-1; i++){ //или -2?
             int currentTown = antRoute[i-1];
             int[] nextTowns = new int[numberOfTowns - i];
             //Get ant next towns
             for(int j = i; j<numberOfTowns-1; j++)
                 nextTowns[j] = antRoute[j];
+
             double[] probabilityDistribution = countProbabilityDistribution(pheromonesMatrix,
                     visibilityMatrix, currentTown, nextTowns, pheromonesPower, visibilityPower);
+
             double happenedProbability = (new Random()).nextDouble();
             int newTownIndex = countNewTownIndex(probabilityDistribution, happenedProbability);
             swapTowns(i, newTownIndex);
