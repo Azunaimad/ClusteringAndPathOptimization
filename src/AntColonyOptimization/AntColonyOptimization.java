@@ -17,7 +17,7 @@ public class AntColonyOptimization {
     private double[][] visibilityMatrix;
     private double qParameter;
 
-    private Ant[] ants;
+    protected Ant[] ants;
 
     private int bestAntRouteIndex;
     private double bestLength;
@@ -67,7 +67,7 @@ public class AntColonyOptimization {
         //Count simple ants pheromones
         for (int i=0; i<numberOfAnts; i++)
             for(int j=0; j<numberOfTowns; j++){
-                simpleAntPher[ants[i].antRoute[j]][ants[i].antRoute[j+1]] =
+                simpleAntPher[ants[i].antRoute[j]][ants[i].antRoute[j+1]] +=
                         qParameter / ants[i].getRouteLength(distanceMatrix);
             }
 
@@ -81,8 +81,8 @@ public class AntColonyOptimization {
         //Update pheromones Matrix
         for(int i=0; i<numberOfTowns; i++)
             for(int j=0; j<numberOfTowns; j++)
-                pheromonesMatrix[i][j] = (1-pheromonesEvaporation)*simpleAntPher[i][j] +
-                        numberOfEliteAnts*eliteAntPher[i][j];
+                pheromonesMatrix[i][j] = (1-pheromonesEvaporation)*pheromonesMatrix[i][j] +
+                        simpleAntPher[i][j] + numberOfEliteAnts*eliteAntPher[i][j];
     }
 
     public double getBestLength(){
@@ -100,6 +100,10 @@ public class AntColonyOptimization {
                         pheromonesPower, visibilityPower);
             countNewPheromones();
         }
+    }
+
+    public double[][] getPheromonesMatrix() {
+        return pheromonesMatrix;
     }
 
 

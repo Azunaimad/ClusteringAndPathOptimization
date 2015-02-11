@@ -26,7 +26,6 @@ public class Ant {
                 // = j - nextTowns.length + numberOfTowns - 1;
                 // nextTowns.length = probabilityDistribution.length
                 newTownIndex = j - probabilityDistribution.length + numberOfTowns;
-                System.out.println(newTownIndex);
                 break;
             }
         }
@@ -79,8 +78,8 @@ public class Ant {
             int currentTown = antRoute[i-1];
             int[] nextTowns = new int[numberOfTowns - i];
             //Get ant next towns
-            for(int j = i; j<numberOfTowns-1; j++)
-                nextTowns[j] = antRoute[j];
+            for(int j = i; j<numberOfTowns; j++)
+                nextTowns[j-i] = antRoute[j];
 
             double[] probabilityDistribution = countProbabilityDistribution(pheromonesMatrix,
                     visibilityMatrix, currentTown, nextTowns, pheromonesPower, visibilityPower);
@@ -98,9 +97,9 @@ public class Ant {
     }
 
     protected double getRouteLength(double[][] distanceMatrix){
-        for(int i=0; i<distanceMatrix.length; i++){
+        routeLength = 0;
+        for(int i=0; i<distanceMatrix[0].length; i++)
                 routeLength += distanceMatrix[antRoute[i]][antRoute[i+1]];
-            }
         return routeLength;
     }
 

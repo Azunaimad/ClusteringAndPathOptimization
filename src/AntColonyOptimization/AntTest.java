@@ -7,31 +7,36 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class AntTest{
+    private double[][] distanceMatrix = {{1000, 30, 40, 50},
+                                         {24, 1000, 75, 64},
+                                         {42, 45, 1000, 13},
+                                         {48, 98, 32, 1000}};
+
+
+    private int numberOfTowns = 4;
     public AntTest(){
 
     }
 
     @Test
     public void testSwapTowns(){
-        int numberOfTowns = 3;
-        int[] testRoute = {3, 1, 2, 3};
-        Ant ant = new Ant(numberOfTowns);
+        int[] testRoute = {2, 0, 3, 1, 2};
+        Ant ant = new Ant(numberOfTowns, distanceMatrix);
         ant.antRoute = testRoute;
         ant.swapTowns(1, 2);
-        int expVal = 2;
+        int expVal = 3;
         assertEquals(expVal,ant.antRoute[1]);
-        expVal = 1;
+        expVal = 0;
         assertEquals(expVal,ant.antRoute[2]);
     }
 
 
     @Test
     public void testCountNewTownIndex(){
-        int numberOfTowns = 6;
-        Ant ant = new Ant(numberOfTowns);
-        double[] probabilityDistribution = {0.1, 0.2, 0.3, 0.4};
-        double happenedProbability = 0.35;
-        int expVal = 4;
+        Ant ant = new Ant(numberOfTowns, distanceMatrix);
+        double[] probabilityDistribution = {0.1, 0.2, 0.3};
+        double happenedProbability = 0.25;
+        int expVal = 2;
         int result = ant.countNewTownIndex(probabilityDistribution, happenedProbability);
         assertEquals(expVal,result);
     }
@@ -48,9 +53,8 @@ public class AntTest{
         int[] nextTowns = {2, 1};
         double pheromonesPower = 1.0;
         double visibilityPower = 2.0;
-        int numberOfTowns = 3;
 
-        Ant ant = new Ant(numberOfTowns);
+        Ant ant = new Ant(numberOfTowns, distanceMatrix);
 
         double[] result = ant.countProbabilityDistribution(pheromonesMatrix,
                 visibilityMatrix,currentTown,nextTowns,
@@ -62,11 +66,10 @@ public class AntTest{
 
     @Test
     public void testMakeInitialAntRoute(){
-        int numberOfTowns = 10;
-        Ant ant = new Ant(numberOfTowns);
+        Ant ant = new Ant(numberOfTowns,distanceMatrix);
         ant.makeInitialAntRoute();
 
-        int expVal=11;
+        int expVal=5;
         assertEquals(expVal,ant.antRoute.length);
 
         //Test that route's end equals start
@@ -77,5 +80,15 @@ public class AntTest{
             boolean test = ArrayUtils.contains(ant.antRoute,i);
             assertEquals(true,test);
         }
+    }
+
+    @Test
+    public void testGetRouteLength(){
+        Ant ant = new Ant(numberOfTowns, distanceMatrix);
+        ant.antRoute = new int[]{2, 0, 3, 1, 2};
+        double result = ant.getRouteLength(distanceMatrix);
+        double expVal = 265.0;
+        assertEquals(expVal,result,0.0);
+
     }
 }
