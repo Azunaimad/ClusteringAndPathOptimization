@@ -1,6 +1,7 @@
 package AntColonyOptimization;
 
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -91,5 +92,10 @@ public class AntColonyOptimizationTest {
 
         assertEquals(expVal, result, 8.0);
 
+        int[] route = aco.getBestRoute();
+        for(int i=0; i<numberOfTowns; i++) {
+            boolean test = ArrayUtils.contains(route, i);
+            assertEquals(true,test);
+        }
     }
 }

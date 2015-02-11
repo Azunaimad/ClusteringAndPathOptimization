@@ -22,9 +22,6 @@ public class Ant {
         for(int j=0; j<probabilityDistribution.length; j++){
             probSum+= probabilityDistribution[j];
             if (happenedProbability<probSum){
-                // newTownIndex = i-1+j = j - (numberOfTowns - i) + numberOfTowns - 1 =
-                // = j - nextTowns.length + numberOfTowns - 1;
-                // nextTowns.length = probabilityDistribution.length
                 newTownIndex = j - probabilityDistribution.length + numberOfTowns;
                 break;
             }
@@ -74,7 +71,7 @@ public class Ant {
     protected void makeNewAntRoute(double[][] pheromonesMatrix, double[][] visibilityMatrix,
                                    double pheromonesPower, double visibilityPower){
 
-        for(int i=1; i<numberOfTowns-1; i++){ //или -2?
+        for(int i=1; i<numberOfTowns-1; i++){
             int currentTown = antRoute[i-1];
             int[] nextTowns = new int[numberOfTowns - i];
             //Get ant next towns
