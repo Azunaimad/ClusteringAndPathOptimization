@@ -22,12 +22,12 @@ public class AntTest{
     public void testSwapTowns(){
         int[] testRoute = {2, 0, 3, 1, 2};
         Ant ant = new Ant(numberOfTowns, distanceMatrix);
-        ant.antRoute = testRoute;
+        ant.setAntRoute(testRoute);
         ant.swapTowns(1, 2);
         int expVal = 3;
-        assertEquals(expVal,ant.antRoute[1]);
+        assertEquals(expVal,ant.getAntRoute()[1]);
         expVal = 0;
-        assertEquals(expVal,ant.antRoute[2]);
+        assertEquals(expVal,ant.getAntRoute()[2]);
     }
 
 
@@ -70,14 +70,14 @@ public class AntTest{
         ant.makeInitialAntRoute();
 
         int expVal=5;
-        assertEquals(expVal,ant.antRoute.length);
+        assertEquals(expVal,ant.getAntRoute().length);
 
         //Test that route's end equals start
-        assertEquals(ant.antRoute[0],ant.antRoute[numberOfTowns]);
+        assertEquals(ant.getAntRoute()[0],ant.getAntRoute()[numberOfTowns]);
 
         //Test that ant.Route contains all Towns
         for(int i=0; i<numberOfTowns; i++) {
-            boolean test = ArrayUtils.contains(ant.antRoute,i);
+            boolean test = ArrayUtils.contains(ant.getAntRoute(),i);
             assertEquals(true,test);
         }
     }
@@ -85,7 +85,7 @@ public class AntTest{
     @Test
     public void testGetRouteLength(){
         Ant ant = new Ant(numberOfTowns, distanceMatrix);
-        ant.antRoute = new int[]{2, 0, 3, 1, 2};
+        ant.setAntRoute(new int[]{2, 0, 3, 1, 2});
         double result = ant.getRouteLength(distanceMatrix);
         double expVal = 265.0;
         assertEquals(expVal,result,0.0);

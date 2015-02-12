@@ -39,9 +39,9 @@ public class AntColonyOptimizationTest {
                 numberOfIter,pheromonesPower, visibilityPower, pheromonesEvaporation,
                 distanceMatrix, pheromonesMatrix, qParameter);
 
-        aco.ants[0].antRoute = new int[]{0, 1, 2, 3, 4, 5, 0}; //len = 176
-        aco.ants[1].antRoute = new int[]{1, 2, 3, 5, 4, 0, 1}; //len = 161
-        aco.ants[2].antRoute = new int[]{2, 3, 1, 0, 5, 4, 2}; //len = 126
+        aco.ants[0].setAntRoute(new int[]{0, 1, 2, 3, 4, 5, 0}); //len = 176
+        aco.ants[1].setAntRoute(new int[]{1, 2, 3, 5, 4, 0, 1}); //len = 161
+        aco.ants[2].setAntRoute(new int[]{2, 3, 1, 0, 5, 4, 2}); //len = 126
 
         aco.countBestLength();
         double result = aco.getBestLength();
@@ -56,9 +56,9 @@ public class AntColonyOptimizationTest {
                 numberOfIter,pheromonesPower, visibilityPower, pheromonesEvaporation,
                 distanceMatrix, pheromonesMatrix, qParameter);
 
-        aco.ants[0].antRoute = new int[]{0, 1, 2, 3, 4, 5, 0}; //len = 176
-        aco.ants[1].antRoute = new int[]{1, 2, 3, 5, 4, 0, 1}; //len = 161
-        aco.ants[2].antRoute = new int[]{2, 3, 1, 0, 5, 4, 2}; //len = 126
+        aco.ants[0].setAntRoute(new int[]{0, 1, 2, 3, 4, 5, 0}); //len = 176
+        aco.ants[1].setAntRoute(new int[]{1, 2, 3, 5, 4, 0, 1}); //len = 161
+        aco.ants[2].setAntRoute(new int[]{2, 3, 1, 0, 5, 4, 2}); //len = 126
 
         aco.countNewPheromones();
         double[][] result = aco.getPheromonesMatrix();
