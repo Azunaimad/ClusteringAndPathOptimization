@@ -1,3 +1,4 @@
+<%@ page import="java.util.Enumeration" %>
 <%--
   Created by IntelliJ IDEA.
   User: Azunai
@@ -14,13 +15,13 @@
 TEST
 <%
 HttpSession httpSession = request.getSession(false);
-  Object coords = httpSession.getAttribute("coordinates");
-
-
+  Enumeration coordinates =  httpSession.getAttributeNames();
+  String test = (String) coordinates.nextElement();
+  String test2= (String) httpSession.getAttribute(test);
 %>
-<%=coords%>
-<%
 
-%>
+<%=test%>
+<br>
+<%=test2%>
 </body>
 </html>

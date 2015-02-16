@@ -20,19 +20,19 @@
 
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map-canvas" style="width: 100%; height: 500px"></div>
-    <form method="get" name = 'frm' action="response.jsp">
+    <form method="get" name = 'frm'>
       <div id="dynamicInput">
         <table id="input-table" cellspacing="0" cellpadding="4">
         <tr>
           <td class="address">Адреса</td>
-          <td class="volume">Объемы перевозок</td>
+          <td class="volume">Объемы</td>
           <td class="start-point">Склад</td>
         </tr>
         </table>
       </div>
 
 
-      <input type="hidden" name="hiddenField" id="hiddenField" value="">
+      <input type="hidden" name="hiddenField" id="hiddenField" value="_">
       <input id = "submit" type="submit" value="Рассчитать оптимальный маршрут">
       <input id = "clear" type="button" value="Очистить" onclick="removeAll('input-table')">
     </form>
@@ -40,14 +40,13 @@
 
   <%
     String coordinates = request.getParameter("hiddenField");
-    String[] coords;
     HttpSession httpSession = request.getSession();
-
-    if(coordinates != null && !coordinates.equals("")){
-      coords = coordinates.split("_");
-      httpSession.setAttribute("coordinates", coords);
-    }
+    httpSession.setAttribute("coordinates", coordinates);
+    if(request.getParameter("hiddenField")!=null)
+      response.sendRedirect("/response.jsp");
   %>
+
+
 
   </body>
 </html>
