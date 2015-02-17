@@ -88,8 +88,6 @@ var addMarker = function(lat, lng) {
     markers[markerId] = marker; // cache marker in markers object
     bindMarkerEvents(marker); // bind right click event to marker
     addField("input-table", markerId);
-    var hiddenFiled =  document.getElementById('hiddenField');
-    hiddenFiled.value += marker.position +"_";
 };
 
 
@@ -99,9 +97,9 @@ function addField(tableName, markerId){
     var cell1 = newrow.insertCell(0);
     var cell2 = newrow.insertCell(1);
     var cell3 = newrow.insertCell(2);
-    cell1.innerHTML = "<input type='text' class = 'address' name='data-in' id= 'address_"+markerId+"' disabled>";
-    cell2.innerHTML = "<input type='text' class = 'volume' name='data-in' id= 'transpVal_"+markerId+"'>";
-    cell3.innerHTML = "<input type='radio' class = 'radio' name='data-in' id= 'radio_'"+markerId+"'>";
+    cell1.innerHTML = "<input type='text' class = 'address' name='addresses' id= 'address_"+markerId+"' disabled>";
+    cell2.innerHTML = "<input type='text' class = 'volume' name='volumes' id= 'transpVal_"+markerId+"'>";
+    cell3.innerHTML = "<input type='radio' class = 'radio' name='radios' id= 'radio_"+markerId+"'>";
     document.getElementById(tableName).appendChild(newrow);
     codeLatLng(markerId); // geocode latitude and longitude into address
 
@@ -145,6 +143,26 @@ function removeAll(){
     for (var id in markers){
         var marker = markers[id];
         removeMarker(marker, id);
+    }
+}
+
+function fillHiddenFields(){
+    var hiddenfieldCoords = document.getElementById('hiddenFieldCoords');
+    var hiddenfieldVolume = document.getElementById('hiddenFieldVolume');
+    var hiddenFieldStore = document.getElementById('hiddenFieldStore');
+
+    for (var id in markers){
+        hiddenfieldCoords.value += markers[id].position + '_';
+        var volumeField = document.getElementById('transpVal_'+id);
+        hiddenfieldVolume.value += volumeField.value+'_';
+        if(volumeField.value == '0'){
+            hiddenFieldStore.value += 1+'_';
+        }
+        else{
+            hiddenFieldStore.value += 0+'_';
+        }
+
+
     }
 }
 

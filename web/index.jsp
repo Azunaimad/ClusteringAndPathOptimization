@@ -13,7 +13,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensors=false&libraries=places&language=ru"></script>
     <script type="text/javascript" src="googleMap.js"></script>
 
-
   </head>
   <link rel="stylesheet" type="text/css" href="map.css">
   <body>
@@ -27,25 +26,32 @@
           <td class="address">Адреса</td>
           <td class="volume">Объемы</td>
           <td class="start-point">Склад</td>
+          <%--/TODO/ Добавить строку для объема грузовиков --%>
         </tr>
         </table>
       </div>
 
 
-      <input type="hidden" name="hiddenField" id="hiddenField" value="_">
-      <input id = "submit" type="submit" value="Рассчитать оптимальный маршрут">
+
+      <input type="hidden" name="hiddenFieldCoords" id="hiddenFieldCoords" value="_">
+      <input type="hidden" name="hiddenFieldVolume" id="hiddenFieldVolume" value="_">
+      <input type="hidden" name="hiddenFieldStore" id="hiddenFieldStore" value="_">
+
+      <input id = "submit" type="submit" value="Рассчитать оптимальный маршрут" onclick="fillHiddenFields()">
       <input id = "clear" type="button" value="Очистить" onclick="removeAll('input-table')">
     </form>
 
-
   <%
-    String coordinates = request.getParameter("hiddenField");
+    String coordinates = request.getParameter("hiddenFieldCoords");
+    String volume = request.getParameter("hiddenFieldVolume");
     HttpSession httpSession = request.getSession();
     httpSession.setAttribute("coordinates", coordinates);
-    if(request.getParameter("hiddenField")!=null)
+    if(request.getParameter("hiddenFieldCoords")!=null)
       response.sendRedirect("/response.jsp");
   %>
-
+<%=coordinates%>
+    <br>
+  <%=volume%>
 
 
   </body>
