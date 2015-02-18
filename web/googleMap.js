@@ -150,6 +150,10 @@ function fillHiddenFields(){
     var hiddenfieldCoords = document.getElementById('hiddenFieldCoords');
     var hiddenfieldVolume = document.getElementById('hiddenFieldVolume');
     var hiddenFieldStore = document.getElementById('hiddenFieldStore');
+    var hiddenFieldMaxWeight = document.getElementById('hiddenFieldMaxWeight');
+
+    var maxWeight = document.getElementById('maxWeight');
+    hiddenFieldMaxWeight.value = maxWeight.value;
 
     for (var id in markers){
         hiddenfieldCoords.value += markers[id].position + '_';

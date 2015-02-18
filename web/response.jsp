@@ -1,6 +1,7 @@
 <%@ page import="java.util.Enumeration" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="com.google.appengine.repackaged.com.google.api.services.datastore.client.DatastoreException" %>
+<%@ page import="SweepAlgorithm.Cluster" %>
 <%--
   Created by IntelliJ IDEA.
   User: Azunai
@@ -24,7 +25,7 @@ TEST
   String coordinatesStr= (String) httpSession.getAttribute(element);
   String[] tempCoordinates = coordinatesStr.split("_");
   tempCoordinates = Arrays.copyOfRange(tempCoordinates, 1, tempCoordinates.length);
-  Double[][] coordinates = new Double[2][tempCoordinates.length];
+  double[][] coordinates = new double[2][tempCoordinates.length];
   for(int i=0; i<tempCoordinates.length; i++){
     String[] temp;
     temp = (tempCoordinates[i].replaceAll("[^0-9. ]","")).split(" ");
@@ -56,6 +57,8 @@ TEST
     else
       throw new Exception();
   }
+
+
 
 
 

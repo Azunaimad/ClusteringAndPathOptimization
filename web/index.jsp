@@ -26,7 +26,8 @@
           <td class="address">Адреса</td>
           <td class="volume">Объемы</td>
           <td class="start-point">Склад</td>
-          <%--/TODO/ Добавить строку для объема грузовиков --%>
+          <td class="start-point">Загрузка грузовика</td>
+          <td><input type="text" class="volume" name="maxWeight" id="maxWeight"></td>
         </tr>
         </table>
       </div>
@@ -36,6 +37,7 @@
       <input type="hidden" name="hiddenFieldCoords" id="hiddenFieldCoords" value="_">
       <input type="hidden" name="hiddenFieldVolume" id="hiddenFieldVolume" value="_">
       <input type="hidden" name="hiddenFieldStore" id="hiddenFieldStore" value="_">
+      <input type="hidden" name="hiddenFieldMaxWeight" id="hiddenFieldMaxWeight" value="">
 
       <input id = "submit" type="submit" value="Рассчитать оптимальный маршрут" onclick="fillHiddenFields()">
       <input id = "clear" type="button" value="Очистить" onclick="removeAll('input-table')">
