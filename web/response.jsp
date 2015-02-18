@@ -58,7 +58,48 @@ TEST
       throw new Exception();
   }
 
+  // Get Max Weight
+  element = (String) data.nextElement();
+  String maxWeightStr = (String) httpSession.getAttribute(element);
+  int maxWeight = Integer.parseInt(maxWeightStr);
 
+  // Swap 0 volumes and coordinates with storeIndex
+  if(storeIndex != 0){
+    double temp = volumes[storeIndex];
+    volumes[storeIndex] = volumes[0];
+    volumes[0] = temp;
+
+    double tempX = coordinates[0][storeIndex];
+    double tempY = coordinates[1][storeIndex];
+    coordinates[0][storeIndex] = coordinates[0][0];
+    coordinates[1][storeIndex] = coordinates[1][0];
+    coordinates[0][0] = tempX;
+    coordinates[1][0] = tempY;
+  }
+
+  Cluster cluster = new Cluster(coordinates, volumes, maxWeight);
+  double[][] afterClusterization = cluster.doClusterization();
+
+
+  if(storeIndex != 0){
+    for(int i=0; i<afterClusterization.length; i++)
+      for(int j=0; j<afterClusterization[0].length; j++){
+        if(afterClusterization[i][j] == 0)
+          afterClusterization[i][j] = storeIndex;
+        else if(afterClusterization[i][j] == storeIndex)
+          afterClusterization[i][j] = 0;
+      }
+    double temp = volumes[storeIndex];
+    volumes[storeIndex] = volumes[0];
+    volumes[0] = temp;
+
+    double tempX = coordinates[0][storeIndex];
+    double tempY = coordinates[1][storeIndex];
+    coordinates[0][storeIndex] = coordinates[0][0];
+    coordinates[1][storeIndex] = coordinates[1][0];
+    coordinates[0][0] = tempX;
+    coordinates[1][0] = tempY;
+  }
 
 
 
