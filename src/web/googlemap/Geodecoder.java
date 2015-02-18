@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Map;
 
-public class Geodecoding extends  AbstractUrlParamsEncoding{
+public class Geodecoder extends  AbstractUrlParamsEncoding{
     public String geodecode(String coordinates) throws IOException, JSONException {
         String baseUrl = "http://maps.googleapis.com/maps/api/geocode/json";
         Map<String, String> params = Maps.newHashMap();

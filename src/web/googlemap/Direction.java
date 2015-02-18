@@ -9,7 +9,8 @@ import java.io.IOException;
 import java.util.Map;
 
 public class Direction extends AbstractUrlParamsEncoding {
-    public double getDirectionLength(String origin, String destination, String lengthType) throws IOException, JSONException {
+    public double getDirectionLength(String origin, String destination, String type)
+            throws IOException, JSONException {
         String baseUrl = "http://maps.googleapis.com/maps/api/directions/json";
         Map<String, String> params = Maps.newHashMap();
         params.put("sensor", "false");
@@ -22,9 +23,9 @@ public class Direction extends AbstractUrlParamsEncoding {
         JSONObject location = response.getJSONArray("routes").getJSONObject(0);
         location = location.getJSONArray("legs").getJSONObject(0);
         String lengthStr = "";
-        if(lengthType.equals("duration"))
+        if(type.equals("duration"))
             lengthStr = location.getJSONObject("duration").getString("value");
-        else if(lengthType.equals("distance"))
+        else if(type.equals("distance"))
             lengthStr = location.getJSONObject("distance").getString("text");
 
         return Double.parseDouble(lengthStr);

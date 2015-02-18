@@ -22,6 +22,36 @@ public class AntColonyOptimization {
     private int bestAntRouteIndex;
     private double bestLength;
 
+    public AntColonyOptimization(double[][] distanceMatrix){
+        this.distanceMatrix = distanceMatrix;
+        numberOfAnts = distanceMatrix.length;
+        numberOfEliteAnts = 0;
+        numberOfTowns = distanceMatrix.length;
+
+        numberOfIter = 100;
+        pheromonesPower = 1;
+        visibilityPower = 2;
+        pheromonesEvaporation = 0.5;
+
+
+
+        this.ants = new Ant[numberOfAnts];
+        for (int i=0; i<numberOfAnts; i++){
+            this.ants[i] = new Ant(numberOfTowns, distanceMatrix);
+        }
+
+        pheromonesMatrix = new double[distanceMatrix.length][distanceMatrix[0].length];
+        this.visibilityMatrix = new double[distanceMatrix.length][distanceMatrix[0].length];
+        for(int i=0; i<distanceMatrix.length;i++)
+            for(int j=0; j<distanceMatrix[0].length;j++){
+                this.visibilityMatrix[i][j] = 1.0/distanceMatrix[i][j];
+                pheromonesMatrix[i][j] = 0.1;
+            }
+
+        qParameter = ants[0].getRouteLength(distanceMatrix);
+        this.bestLength = 9999999.0;
+    }
+
     public AntColonyOptimization(int numberOfAnts, int numberOfEliteAnts, int numberOfIter,
                                  double pheromonesPower, double visibilityPower,
                                  double pheromonesEvaporation, double[][] distanceMatrix,

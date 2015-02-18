@@ -53,7 +53,7 @@ public class Cluster {
         int breakcityn=0;
         int[] breakM=new int[need.length];
 
-        for (int w=0;w<=Ncity;w++) {
+        for (int w=0;w<Ncity;w++) {
             double sum=0.0;
             for (int q = breakcityn; q < Ncity; q++) {
                 sum = need[cityn[q]] + sum;
@@ -63,16 +63,20 @@ public class Cluster {
                 }
             }
             breakM[w]=breakcityn;
-            if (breakcityn==Ncity-1) break;
+            if (breakcityn==Ncity-1)  break;
 
         }
 
         int counter = 0;
-        for( int i=0; i<breakM.length; i++ ) {
+        for( int i=1; i<breakM.length; i++ ) {
             if( breakM[i] != 0 ) {
-                counter++;
+                if (breakM[i] != breakM[i - 1]) {
+                    counter++;
+                }
             }
         }
+
+        counter=counter+1;
 
         int width=breakM[0];
         for (int r=0;r<counter-1;r++) {
@@ -83,7 +87,7 @@ public class Cluster {
 
         if (Ncity-breakM[counter-1]>width) {
             width=Ncity-breakM[counter-1];
-        }
+        };
 
 
 
@@ -95,7 +99,7 @@ public class Cluster {
             }
         }
 
-        for (int i=0;i<breakM[0]-1;i++){
+        for (int i=0;i<breakM[0];i++){
             m[0][i]=cityn[i];
         }
 
@@ -109,6 +113,7 @@ public class Cluster {
         for (int j=breakM[counter-1];j<Ncity;j++){
             m[counter][j-breakM[counter-1]]=cityn[j];
         }
+
         return m;
     }
 }

@@ -46,8 +46,14 @@
   <%
     String coordinates = request.getParameter("hiddenFieldCoords");
     String volume = request.getParameter("hiddenFieldVolume");
+    String store = request.getParameter("hiddenFieldStore");
+    String weight = request.getParameter("hiddenFieldMaxWeight");
+
     HttpSession httpSession = request.getSession();
     httpSession.setAttribute("coordinates", coordinates);
+    httpSession.setAttribute("volume",volume);
+    httpSession.setAttribute("store", store);
+    httpSession.setAttribute("weight", weight);
     if(request.getParameter("hiddenFieldCoords")!=null)
       response.sendRedirect("/response.jsp");
   %>

@@ -1,5 +1,7 @@
 package web.googlemap;
 
+import SweepAlgorithm.Cluster;
+
 import java.util.Arrays;
 
 /**
@@ -8,28 +10,19 @@ import java.util.Arrays;
 public class Test {
 
     public static void main(String[] args) {
-        String coordinatesStr = "_(59.923710640259905, 30.3057861328125)_(60.923710640259905, 35.3057861328125)_(57.923710640259905, 31.3057861328125)_";
-        String volumesStr = "_0_100_150_";
-        String storeStr = "_1_0_0_";
-
-        String[] tempVolumes = volumesStr.split("_");
-        String[] store = storeStr.split("_");
-        String[] tempCoordinates = coordinatesStr.split("_");
-
-        tempCoordinates = Arrays.copyOfRange(tempCoordinates,1,tempCoordinates.length);
-        Double[][] coordinates = new Double[2][tempCoordinates.length];
-        for(int i=0; i<tempCoordinates.length; i++){
-            String[] temp;
-            temp = (tempCoordinates[i].replaceAll("[^0-9. ]","")).split(" ");
-            coordinates[0][i] = Double.parseDouble(temp[0]);
-            coordinates[1][i] = Double.parseDouble(temp[1]);
+        double[][] coordinates = {{1, 4, 7, 2, 9, 12}, {1, 4, 3, 12, 15, 5}};
+        double[] need = {0, 1, 2, 1, 2, 1};
+        double weight = 3;
+        Cluster cluster = new Cluster(coordinates,need, weight);
+        double[][] res = cluster.doClusterization();
+        for(int i=0; i<res.length; i++) {
+            System.out.println("");
+            for (int j = 0; j < res[0].length; j++)
+                System.out.print(res[i][j]+" ");
         }
 
-        tempVolumes = Arrays.copyOfRange(tempVolumes,1,tempVolumes.length);
-        double[] volumes = new double[tempVolumes.length];
-        for (int i=0; i<tempVolumes.length; i++){
-            volumes[i] = Double.parseDouble(tempVolumes[i]);
-        }
+        String test = Arrays.toString(need);
+        System.out.println(test);
 
     }
 }
