@@ -1,8 +1,4 @@
-package web.googlemap;
-
-import org.json.JSONException;
-
-import java.io.IOException;
+package org.googlemap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,9 +13,7 @@ public class TestGeodecoder {
         try {
             String exVal = "Большая Подьяческая улица, 20, Санкт-Петербург, Россия, 190068";
             assertEquals(exVal, geodecoder.geodecode(coordinatesStr));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

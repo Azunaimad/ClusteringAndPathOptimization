@@ -1,4 +1,4 @@
-package web.googlemap;
+package org.googlemap;
 
 import SweepAlgorithm.Cluster;
 

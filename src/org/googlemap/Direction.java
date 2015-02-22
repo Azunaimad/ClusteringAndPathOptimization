@@ -1,16 +1,14 @@
-package web.googlemap;
+package org.googlemap;
 
 
 import com.google.appengine.labs.repackaged.com.google.common.collect.Maps;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Map;
 
 public class Direction extends AbstractUrlParamsEncoding {
     public double getDirectionLength(String origin, String destination, String type)
-            throws IOException, JSONException {
+            throws Exception {
         String baseUrl = "http://maps.googleapis.com/maps/api/directions/json";
         Map<String, String> params = Maps.newHashMap();
         params.put("sensor", "false");
@@ -19,7 +17,7 @@ public class Direction extends AbstractUrlParamsEncoding {
         params.put("origin", origin);
         params.put("destination", destination);
         String url = baseUrl + '?' + encodeParams(params);
-        JSONObject response = JsonReader.read(url);
+        JSONObject response = JSONReader.read(url);
         JSONObject location = response.getJSONArray("routes").getJSONObject(0);
         location = location.getJSONArray("legs").getJSONObject(0);
         String lengthStr = "";

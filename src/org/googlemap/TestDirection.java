@@ -1,7 +1,4 @@
-package web.googlemap;
-
-import org.json.JSONException;
-import java.io.IOException;
+package org.googlemap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,9 +17,7 @@ public class TestDirection {
                     geodecoder.geodecode(destination), "duration");
             double expVal = 24197.0;
             assertEquals(expVal,result,0.0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

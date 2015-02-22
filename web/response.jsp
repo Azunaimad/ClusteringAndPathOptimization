@@ -1,13 +1,6 @@
-<%@ page import="java.util.Enumeration" %>
 <%@ page import="java.util.Arrays" %>
-<%@ page import="com.google.appengine.repackaged.com.google.api.services.datastore.client.DatastoreException" %>
 <%@ page import="SweepAlgorithm.Cluster" %>
-<%@ page import="web.googlemap.Geodecoder" %>
-<%@ page import="web.googlemap.Direction" %>
-<%@ page import="org.json.JSONException" %>
 <%@ page import="AntColonyOptimization.AntColonyOptimization" %>
-<%@ page import="web.googlemap.DistanceMatrix" %>
-<%@ page import="java.io.IOException" %>
 <%--
   Created by IntelliJ IDEA.
   User: Azunai
@@ -24,7 +17,6 @@
 TEST
 <%
   HttpSession httpSession = request.getSession(false);
-  Enumeration data =  httpSession.getAttributeNames();
 
   // Get Coordinates
   String coordinatesStr = (String) httpSession.getAttribute("coordinates");
@@ -113,6 +105,7 @@ TEST
   4.0 3.0 -1.0
    */
 
+  //TODO: Проверить, а работает ли вообще все это
   int[] townsInClusters = new int[indexMatrix.length];
   for(int i=0; i<indexMatrix.length; i++) {
     for (int j = 0; j < indexMatrix[0].length; j++){
@@ -122,25 +115,28 @@ TEST
   }
 
   String[] bestRoutes = new String[indexMatrix.length];
-
   String type = "duration";
-
   double totalLength = 0.0;
   for(int i=0; i<indexMatrix.length; i++){
     int nOfTowns = townsInClusters[i];
 
+    double[][] subCoordinates = new double[2][nOfTowns];
+    for (int j=0; j<indexMatrix[i].length; j++){
+      if(indexMatrix[i][j] != -1){
+        subCoordinates[0][j] = coordinates[0][indexMatrix[i][j]];
+        subCoordinates[1][j] = coordinates[1][indexMatrix[i][j]];
+      }
+    }
+
     double[][] distanceMatrix;
     try {
-      distanceMatrix = new DistanceMatrix(nOfTowns, coordinates, indexMatrix, storeIndex, type)
-              .getDistanceMatrix(i);
+      distanceMatrix = new org.googlemap.DistanceMatrix().getDistanceMatrix(subCoordinates, type);
       AntColonyOptimization aco = new AntColonyOptimization(distanceMatrix);
       int[] bestRoute = aco.getBestRoute();
       totalLength += aco.getBestLength();
       bestRoutes[i] = Arrays.toString(bestRoute);
-      
-    } catch (JSONException e) {
-      e.printStackTrace();
-    } catch (IOException e){
+
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
@@ -148,7 +144,6 @@ TEST
 
 
 %>
-
 
 
 </body>

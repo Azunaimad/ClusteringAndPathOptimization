@@ -1,13 +1,12 @@
-package web.googlemap;
+package org.googlemap;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-public class JsonReader {
+public class JSONReader {
 
     private static String readAll(final Reader rd) throws IOException {
         final StringBuilder sb = new StringBuilder();
@@ -18,7 +17,7 @@ public class JsonReader {
         return sb.toString();
     }
 
-    public static JSONObject read(final String url) throws IOException, JSONException {
+    public static JSONObject read(final String url) throws Exception {
         final InputStream is = new URL(url).openStream();
         try {
             final BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
