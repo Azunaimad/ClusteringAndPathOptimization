@@ -2,6 +2,7 @@
 <%@ page import="SweepAlgorithm.Cluster" %>
 <%@ page import="AntColonyOptimization.AntColonyOptimization" %>
 <%@ page import="org.googlemap.DistanceMatrix" %>
+<%@ page import="org.googlemap.Geodecoder" %>
 <%--
   Created by IntelliJ IDEA.
   User: Azunai
@@ -153,6 +154,8 @@ TEST
     }
     subCoordinates[0][nOfTowns - 1] = coordinates[0][storeIndex];
     subCoordinates[1][nOfTowns - 1] = coordinates[1][storeIndex];
+
+
     double[][] distanceMatrix;
     distanceMatrix = dM.getDistanceMatrix(subCoordinates, type);
     AntColonyOptimization aco = new AntColonyOptimization(distanceMatrix);
@@ -160,6 +163,33 @@ TEST
     totalLength += aco.getBestLength();
     bestRoutes[i] = Arrays.toString(bestRoute);
   }
+
+  for(int i=0; i<bestRoutes.length; i++){
+    String[] tempRoutes = bestRoutes[i].replaceAll("\\[", "").replace("\\]","").split(", ");
+    int[] route = new int[tempRoutes.length];
+    for(int j=0; j<route.length; j++){
+      int tmp = Integer.parseInt(tempRoutes[j]);
+      if(tmp != townsInClusters[i]-1)
+        route[j] = indexMatrix[i][tmp];
+      else
+        route[j] = storeIndex;
+    }
+%>
+<br>
+<%=(i+1)%>
+<%
+    Geodecoder geodecoder = new Geodecoder();
+    for(int j=0; j<route.length; j++){
+      String tmpCoords = coordinates[0][route[j]] + "," + coordinates[1][route[j]];
+      String address = geodecoder.geodecode(tmpCoords);
+      %>
+    <%=address + " -> "%>
+<%
+    }
+
+  }
+
+
     for(int k=0; k<bestRoutes.length; k++){
 
     %>
