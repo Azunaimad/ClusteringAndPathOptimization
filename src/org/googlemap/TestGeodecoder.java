@@ -1,12 +1,11 @@
 package org.googlemap;
 
+import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Azunai on 18.02.2015.
- */
+
 public class TestGeodecoder {
-    @org.junit.Test
+    @Test
     public void testGeodecode(){
         String coordinatesStr = "59.923710640259905,30.3057861328125";
         Geodecoder geodecoder = new Geodecoder();

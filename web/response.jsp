@@ -1,6 +1,7 @@
 <%@ page import="java.util.Arrays" %>
 <%@ page import="SweepAlgorithm.Cluster" %>
 <%@ page import="AntColonyOptimization.AntColonyOptimization" %>
+<%@ page import="org.googlemap.DistanceMatrix" %>
 <%--
   Created by IntelliJ IDEA.
   User: Azunai
@@ -79,11 +80,10 @@ TEST
       indexMatrix[i][j] = (int) afterClusterization[i][j];
 
 
-  if(storeIndex != 0){
     for(int i=0; i<afterClusterization.length; i++)
       for(int j=0; j<afterClusterization[0].length; j++){
         if(afterClusterization[i][j] == 0)
-          afterClusterization[i][j] = -1;
+          afterClusterization[i][j] = storeIndex;
         else if(afterClusterization[i][j] == storeIndex)
           afterClusterization[i][j] = 0;
       }
@@ -97,8 +97,26 @@ TEST
     coordinates[1][storeIndex] = coordinates[1][0];
     coordinates[0][0] = tempX;
     coordinates[1][0] = tempY;
-  }
 
+  for(int i=0; i<indexMatrix.length; i++)
+    for (int j=0; j<indexMatrix[0].length; j++)
+      if(indexMatrix[i][j] == 0) indexMatrix[i][j] = -1;
+
+
+  for(int k=0; k<indexMatrix.length; k++){
+    %>
+<br>
+<%
+    for (int l=0; l<indexMatrix[0].length; l++){
+  %>
+<%=indexMatrix[k][l]%>
+<%
+    }
+  }
+  %>
+<br>
+<br>
+<%
   /*
   0.0 7.0 2.0
   5.0 1.0 6.0
@@ -117,34 +135,38 @@ TEST
   String[] bestRoutes = new String[indexMatrix.length];
   String type = "duration";
   double totalLength = 0.0;
-  for(int i=0; i<indexMatrix.length; i++){
+  DistanceMatrix dM = new DistanceMatrix();
+
+
+  for(int i=0; i<indexMatrix.length; i++) {
     int nOfTowns = townsInClusters[i];
 
     double[][] subCoordinates = new double[2][nOfTowns];
-    for (int j=0; j<indexMatrix[i].length; j++){
-      if(indexMatrix[i][j] != -1){
-        subCoordinates[0][j] = coordinates[0][indexMatrix[i][j]];
-        subCoordinates[1][j] = coordinates[1][indexMatrix[i][j]];
+    for (int j = 0; j < indexMatrix[i].length; j++) {
+      int minusOneN = 0;
+      if (indexMatrix[i][j] != -1) {
+        subCoordinates[0][j - minusOneN] = coordinates[0][indexMatrix[i][j]];
+        subCoordinates[1][j - minusOneN] = coordinates[1][indexMatrix[i][j]];
+      } else {
+        minusOneN++;
       }
     }
-
+    subCoordinates[0][nOfTowns - 1] = coordinates[0][storeIndex];
+    subCoordinates[1][nOfTowns - 1] = coordinates[1][storeIndex];
     double[][] distanceMatrix;
-    try {
-      distanceMatrix = new org.googlemap.DistanceMatrix().getDistanceMatrix(subCoordinates, type);
-      AntColonyOptimization aco = new AntColonyOptimization(distanceMatrix);
-      int[] bestRoute = aco.getBestRoute();
-      totalLength += aco.getBestLength();
-      bestRoutes[i] = Arrays.toString(bestRoute);
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
+    distanceMatrix = dM.getDistanceMatrix(subCoordinates, type);
+    AntColonyOptimization aco = new AntColonyOptimization(distanceMatrix);
+    int[] bestRoute = aco.getBestRoute();
+    totalLength += aco.getBestLength();
+    bestRoutes[i] = Arrays.toString(bestRoute);
   }
+    for(int k=0; k<bestRoutes.length; k++){
 
-
+    %>
+<%=bestRoutes[k]%>
+<%
+  }
 %>
-
 
 </body>
 </html>

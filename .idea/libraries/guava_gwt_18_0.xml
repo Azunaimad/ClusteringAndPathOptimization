@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="guava-gwt-18.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/guava-gwt-18.0.jar!/com" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/guava-gwt-18.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/guava-gwt-18.0.jar!/com/google/common/io/super" />
+    </SOURCES>
+  </library>
+</component>

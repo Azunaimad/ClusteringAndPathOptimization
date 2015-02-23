@@ -13,7 +13,6 @@ public abstract class AbstractUrlParamsEncoding {
     protected static String encodeParams(final Map<String, String> params) {
         final String paramsUrl = Joiner.on('&').join(
                 Iterables.transform(params.entrySet(), new Function<Entry<String, String>, String>() {
-
                     @Override
                     public String apply(final Entry<String, String> input) {
                         try {
