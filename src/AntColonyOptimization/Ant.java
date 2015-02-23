@@ -2,6 +2,12 @@ package AntColonyOptimization;
 
 import java.util.Random;
 
+/**
+ * Ant class, which represents single ant in ant colony.
+ * It knows only his route, his route length and number of towns.
+ * Other information is common for all Ants.
+ */
+
 public class Ant {
 
     protected int[] antRoute;
@@ -15,7 +21,7 @@ public class Ant {
         makeInitialAntRoute();
         routeLength = getRouteLength(distanceMatrix);
     }
-
+    
     protected int countNewTownIndex(double[] probabilityDistribution, double happenedProbability){
         int newTownIndex = 0;
         double probSum = 0;

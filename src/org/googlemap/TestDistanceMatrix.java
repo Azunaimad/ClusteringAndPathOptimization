@@ -11,16 +11,9 @@ public class TestDistanceMatrix {
                                   {30.3592050075531, 30.353808403015137, 30.35644769668579}};
         DistanceMatrix distanceMatrix = new DistanceMatrix();
         double[][] res = distanceMatrix.getDistanceMatrix(coordinates,"duration");
-        double[][] expArray = {{34849.0, 24849.0},{24689.0, 34849.0}};
-        System.out.println(res.length);
-        System.out.println(res[0].length);
-        System.out.println(distanceMatrix.getUrl());
-        for(int i=0; i<res.length; i++){
-            System.out.println();
-            for (int j=0; j<res[0].length; j++)
-                System.out.print(res[i][j]+" ");
-        }
-        /*for(int i=0; i<res.length; i++)
-            assertArrayEquals(expArray[i],res[i],0.000001);*/
+        double[][] expArray = {{10384.0, 86.0, 249.0},{245.0, 10384.0, 178.0}, {384.0, 164.0, 10384.0}};
+        for(int i=0; i<res.length; i++)
+            assertArrayEquals(expArray[i],res[i],0.000001);
     }
+
 }

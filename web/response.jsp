@@ -16,7 +16,7 @@
     <title></title>
 </head>
 <body>
-TEST
+Маршруты
 <%
   HttpSession httpSession = request.getSession(false);
 
@@ -80,7 +80,7 @@ TEST
     for (int j=0; j<afterClusterization[0].length; j++)
       indexMatrix[i][j] = (int) afterClusterization[i][j];
 
-
+  //Reswap indexes, volumes and coordinates
     for(int i=0; i<afterClusterization.length; i++)
       for(int j=0; j<afterClusterization[0].length; j++){
         if(afterClusterization[i][j] == 0)
@@ -103,28 +103,7 @@ TEST
     for (int j=0; j<indexMatrix[0].length; j++)
       if(indexMatrix[i][j] == 0) indexMatrix[i][j] = -1;
 
-
-  for(int k=0; k<indexMatrix.length; k++){
-    %>
-<br>
-<%
-    for (int l=0; l<indexMatrix[0].length; l++){
-  %>
-<%=indexMatrix[k][l]%>
-<%
-    }
-  }
-  %>
-<br>
-<br>
-<%
-  /*
-  0.0 7.0 2.0
-  5.0 1.0 6.0
-  4.0 3.0 -1.0
-   */
-
-  //TODO: Проверить, а работает ли вообще все это
+  // Count number of towns
   int[] townsInClusters = new int[indexMatrix.length];
   for(int i=0; i<indexMatrix.length; i++) {
     for (int j = 0; j < indexMatrix[0].length; j++){
@@ -133,6 +112,7 @@ TEST
     townsInClusters[i]+=1;
   }
 
+  // Find best Routes
   String[] bestRoutes = new String[indexMatrix.length];
   String type = "duration";
   double totalLength = 0.0;
@@ -164,6 +144,7 @@ TEST
     bestRoutes[i] = Arrays.toString(bestRoute);
   }
 
+  //Print best routes and totalLength
   for(int i=0; i<bestRoutes.length; i++){
     String[] tempRoutes = bestRoutes[i].replaceAll("\\[", "").replace("\\]","").split(", ");
     int[] route = new int[tempRoutes.length];
@@ -188,15 +169,9 @@ TEST
     }
 
   }
-
-
-    for(int k=0; k<bestRoutes.length; k++){
-
-    %>
-<%=bestRoutes[k]%>
-<%
-  }
-%>
+  %>
+<br>
+<%="Совокупное время в пути: " + totalLength%>
 
 </body>
 </html>
