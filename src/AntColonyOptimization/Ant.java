@@ -12,16 +12,28 @@ public class Ant {
 
     protected int[] antRoute;
     protected int numberOfTowns;
-    protected double routeLength;
+    private double routeLength;
 
-
+    /**
+     * Constructor for Ant. Create Ant, create random initial route and count its length
+     * @param numberOfTowns - number of Towns, which Ant should to visit.
+     *                      If numberOfTowns=4, then Ant should visit Towns={0,1,2,3}
+     * @param distanceMatrix - matrix with distances from i to j town.
+     */
     public Ant(int numberOfTowns, double[][] distanceMatrix){
         this.numberOfTowns = numberOfTowns;
         this.antRoute = new int[numberOfTowns+1];
         makeInitialAntRoute();
         routeLength = getRouteLength(distanceMatrix);
     }
-    
+
+    /**
+     * Find index for new town, which we should swap with old town to minimize route length
+     * @param probabilityDistribution - distribution, which we could get using countProbabilityDistribution
+     * @param happenedProbability - realization of the random variable, which helps us to find
+     *                            which route we should to choose
+     * @return new town index
+     */
     protected int countNewTownIndex(double[] probabilityDistribution, double happenedProbability){
         int newTownIndex = 0;
         double probSum = 0;
@@ -35,6 +47,17 @@ public class Ant {
         return newTownIndex;
     }
 
+    /**
+     * Count current probability distribution, which is needed to find next town for the Ant
+     * @param pheromonesMatrix - Matrix (numberOfTowns x numberOfTowns) with current pheromones
+     * @param visibilityMatrix - Matrix (numberOfTowns x numberOfTowns) with visibility
+     * @param currentTown - town where the Ant is now
+     * @param nextTowns - towns, which the Ant could visit
+     * @param pheromonesPower - parameter
+     * @param visibilityPower - parameter
+     * @return current probability distribution, which is necessary to find next town for the Ant
+     * using makeNewAntRoute method
+     */
     protected double [] countProbabilityDistribution(double[][] pheromonesMatrix,
                                                    double[][] visibilityMatrix,
                                                    int currentTown,
@@ -63,6 +86,10 @@ public class Ant {
         return Probability;
     }
 
+    /**
+     * Create initial random route, which contains all towns from 0 to numberOfTowns
+     * Example: let numberOfTowns = 4, then antRoute = {1, 3, 2, 0, 1}
+     */
     protected void makeInitialAntRoute(){
         Random random = new Random();
         for(int j=0; j<numberOfTowns; j++) antRoute[j] = j;
@@ -74,6 +101,13 @@ public class Ant {
         antRoute[numberOfTowns] = antRoute[0];
     }
 
+    /**
+     * Create new Ant's route using pheromones and visibility Matrix
+     * @param pheromonesMatrix - Matrix (numberOfTowns x numberOfTowns) with current pheromones
+     * @param visibilityMatrix - Matrix (numberOfTowns x numberOfTowns) with visibility
+     * @param pheromonesPower - parameter
+     * @param visibilityPower - parameter
+     */
     protected void makeNewAntRoute(double[][] pheromonesMatrix, double[][] visibilityMatrix,
                                    double pheromonesPower, double visibilityPower){
 
@@ -81,8 +115,7 @@ public class Ant {
             int currentTown = antRoute[i-1];
             int[] nextTowns = new int[numberOfTowns - i];
             //Get ant next towns
-            for(int j = i; j<numberOfTowns; j++)
-                nextTowns[j-i] = antRoute[j];
+            System.arraycopy(antRoute, i, nextTowns, i - i, numberOfTowns - i);
 
             double[] probabilityDistribution = countProbabilityDistribution(pheromonesMatrix,
                     visibilityMatrix, currentTown, nextTowns, pheromonesPower, visibilityPower);
@@ -93,6 +126,11 @@ public class Ant {
         }
     }
 
+    /**
+     * Swap 2 towns in antRoute
+     * @param oldTownIndex - antRoute's index
+     * @param newTownIndex - antRoute's index
+     */
     protected void swapTowns(int oldTownIndex, int newTownIndex){
         int temp = antRoute[newTownIndex];
         antRoute[newTownIndex] = antRoute[oldTownIndex];

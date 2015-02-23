@@ -6,7 +6,18 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+/**
+ * Helps to get direction from on point to another
+ */
 public class Direction extends AbstractUrlParamsEncoding {
+    /**
+     * Get distance ot duration from origin to destination
+     * @param origin - origin
+     * @param destination - origin
+     * @param type - equals "duration" or "distance"
+     * @return distance (in meters) or duration (in seconds)
+     * @throws Exception
+     */
     public double getDirectionLength(String origin, String destination, String type)
             throws Exception {
         String baseUrl = "http://maps.googleapis.com/maps/api/directions/json";

@@ -17,6 +17,12 @@ public class JSONReader {
         return sb.toString();
     }
 
+    /**
+     * Read JSON file
+     * @param url - url, where JSON file is
+     * @return JSON object
+     * @throws Exception
+     */
     public static JSONObject read(final String url) throws Exception {
         final InputStream is = new URL(url).openStream();
         try {

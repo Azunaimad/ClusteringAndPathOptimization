@@ -2,14 +2,20 @@ package org.googlemap;
 
 import com.google.appengine.labs.repackaged.com.google.common.collect.Maps;
 import org.json.*;
-
-import java.io.File;
-import java.io.PrintWriter;
 import java.util.Map;
 
+/**
+ * Helps to get distance matrix
+ */
 public class DistanceMatrix extends Direction {
     private String url;
 
+    /**
+     * Form distance matrix using 2 x n coordinates matrix
+     * @param coordinates - 2 x n matrix where 1st row - latitude, 2nd - longitude
+     * @param type - "duration" or "distance
+     * @return n x n distance matrix
+     */
     public double[][] getDistanceMatrix(double[][] coordinates, String type) {
         double [][] distancematrix = new double[coordinates[0].length][coordinates[1].length];
         try {

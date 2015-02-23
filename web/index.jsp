@@ -57,9 +57,6 @@
     if(request.getParameter("hiddenFieldCoords")!=null)
       response.sendRedirect("/response.jsp");
   %>
-<%=coordinates%>
-    <br>
-  <%=volume%>
 
 
   </body>
